@@ -1,0 +1,756 @@
+April 25 Assignments
+1. Find the kth element in a linked list from the end of singlly linked list in :
+  1. Using two traversal 
+   2. In single traversal (using 2 pointer approch).
+
+class Node
+{
+    int data;
+    Node next;
+ 
+    Node(int data, Node next)
+    {
+        this.data = data;
+        this.next = next;
+    }
+}
+ 
+class Main
+{
+  
+    public static Node findKthNode(Node head, int k)
+    {
+        int n = 0;
+        Node curr = head;
+ 
+   
+        while (curr != null)
+        {
+            curr = curr.next;
+            n++;
+        }
+ 
+    
+        if (n >= k)
+        {
+            
+            curr = head;
+            for (int i = 0; i < n - k; i++) {
+                curr = curr.next;
+            }
+        }
+ 
+        return curr;
+    }
+ 
+    public static void main(String[] args)
+    {
+        
+        int[] keys = { 1, 2, 3, 4, 5 };
+ 
+        Node head = null;
+        for (int i = keys.length - 1; i >= 0; i--) {
+            head = new Node(keys[i], head);
+        }
+ 
+        int k = 3;
+        Node node = findKthNode(head, k);
+ 
+        if (node != null) {
+            System.out.println("k'th node from the end is " + node.data);
+        }
+    }
+}
+___________________________________________________________________________
+2  Reverse the last 3 nodes in a linked list
+public class LinkedListIterative   
+{  
+  
+
+static LinkedListNode head;  
+
+static class LinkedListNode   
+{  
+  
+int val;   
+LinkedListNode next;  
+ 
+LinkedListNode(int no)  
+{  
+val = no;  
+next = null;  
+}  
+}  
+  
+
+LinkedListNode reverse(LinkedListNode node)  
+{  
+
+LinkedListNode previous = null;  
+LinkedListNode curr = node;  
+LinkedListNode next = null;  
+  
+  
+while (curr != null)   
+{  
+next = curr.next;  
+curr.next = previous;  
+previous = curr;  
+curr = next;  
+}  
+node = previous;  
+return node;  
+}  
+  
+void printList(LinkedListNode nde)  
+{  
+while (nde != null)   
+{  
+System.out.print(nde.val + " ");  
+nde = nde.next;  
+}  
+}  
+  
+public static void main(String argvs[])  
+{  
+
+LinkedListIterative listObj = new LinkedListIterative();  
+  
+listObj.head = new LinkedListNode(4);  
+  
+listObj.head.next = new LinkedListNode(6);  
+
+listObj.head.next.next = new LinkedListNode(7);  
+ 
+listObj.head.next.next.next = new LinkedListNode(1);  
+
+listObj.head.next.next.next.next = new LinkedListNode(5);  
+  
+
+listObj.head.next.next.next.next.next = new LinkedListNode(8);  
+  
+listObj.head.next.next.next.next.next.next = new LinkedListNode(3);  
+  
+listObj.head.next.next.next.next.next.next.next = new LinkedListNode(2);  
+  
+  
+System.out.println("The Linked list before reversal is: ");  
+listObj.printList(head);  
+head = listObj.reverse(head);  
+System.out.println("\n");  
+System.out.println("After reversal, the linked list is: ");  
+listObj.printList(head);  
+}  
+}  
+___________________________________________________________________________
+
+April 26 Assignments 
+1  https://leetcode.com/problems/intersection-of-two-linked-lists/
+
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if(headA==null||headB==null)//return empty
+                return null;
+                 
+            int lengthA=0;
+            int lengthB=0;
+             
+            ListNode a=headA;
+            ListNode b=headB;
+             while(a!=null)//The length of A
+            {
+                lengthA++;
+                a=a.next;
+            }
+             while(b!=null)//The length of B
+            {
+                lengthB++;
+                b=b.next;
+            }
+            a=headA;
+            b=headB;
+             
+             int minus=lengthA-lengthB;//length difference
+             while(minus!=0)//Let the long linked list take the difference in length first
+            {
+                if(minus>0)
+                {
+                    a=a.next;
+                    minus--;
+                }
+                else
+                {
+                    b=b.next;
+                    minus++;
+                }
+            }
+             while(a!=null&&b!=null)//To judge whether they are equal
+            {
+                         if(a==b)//equal return
+                    return a;
+                         else//Continue to judge if it is not equal
+                {
+                    a=a.next;
+                    b=b.next;
+                }
+            }
+             return null;//If there is no equal, then return null
+    }
+}
+___________________________________________________________________________
+2  Find if the liked list is a Palindrome
+https://www.geeksforgeeks.org/function-to-check-if-a-singly-linked-list-is-palindrome/
+
+import java.util.*;
+ 
+class linkedList {
+    public static void main(String args[])
+    {
+        Node one = new Node(1);
+        Node two = new Node(2);
+        Node three = new Node(3);
+        Node four = new Node(4);
+        Node five = new Node(3);
+        Node six = new Node(2);
+        Node seven = new Node(1);
+        one.ptr = two;
+        two.ptr = three;
+        three.ptr = four;
+        four.ptr = five;
+        five.ptr = six;
+        six.ptr = seven;
+        boolean condition = isPalindrome(one);
+        System.out.println("isPalidrome :" + condition);
+    }
+    static boolean isPalindrome(Node head)
+    {
+ 
+        Node slow = head;
+        boolean ispalin = true;
+        Stack<Integer> stack = new Stack<Integer>();
+ 
+        while (slow != null) {
+            stack.push(slow.data);
+            slow = slow.ptr;
+        }
+ 
+        while (head != null) {
+ 
+            int i = stack.pop();
+            if (head.data == i) {
+                ispalin = true;
+            }
+            else {
+                ispalin = false;
+                break;
+            }
+            head = head.ptr;
+        }
+        return ispalin;
+    }
+}
+ 
+class Node {
+    int data;
+    Node ptr;
+    Node(int d)
+    {
+        ptr = null;
+        data = d;
+    }
+}
+___________________________________________________________________________
+
+April 27 Assignments
+1 Program to find size of Doubly Linked List
+public class CreateDoublyLinkedList {    
+  class Node{    
+        String data;    
+        Node prev;    
+        Node next;    
+  
+        public Node(String data) {    
+            this.data = data;    
+        }    
+    }    
+    Node head = null;  
+    Node tail = null;    
+  
+    
+    public void addNewNode(String data) {    
+  
+         
+        Node newNode = new Node(data);    
+  
+        
+        if(head == null) {  
+        
+            head = newNode;  
+            tail = newNode;  
+            
+            head.prev = null;    
+            
+            tail.next = null;    
+        }  
+        
+        else {    
+            tail.next = newNode;    
+                
+            newNode.prev = tail;    
+          
+            tail = newNode;    
+            
+            tail.next = null;    
+        }    
+    }    
+___________________________________________________________________________
+2  Remove the nodes which are greater than 25 in the double linked list
+
+10->29->34->12->50->7
+import java.util.*;
+ 
+class dsa
+{
+ 
+
+static class Node
+{
+    int data;
+    Node next;
+};
+ 
+
+static Node push( Node head_ref, int new_data)
+{
+    
+    Node new_node = new Node();
+ 
+   
+    new_node.data = new_data;
+ 
+    
+    new_node.next = (head_ref);
+ 
+    
+    (head_ref) = new_node;
+     
+    return head_ref;
+}
+ 
+static void printList( Node head)
+{
+    Node temp = head;
+    while (temp != null)
+    {
+        System.out.printf("%d ", temp.data);
+        temp = temp.next;
+    }
+    System.out.println;
+static void skipMdeleteN( Node head, int M, int N)
+{
+    Node curr = head, t;
+    int count=0;
+    while (curr!=null)
+    {
+        for (count = 1; count < M && curr != null; count++)
+            curr = curr.next;
+        if (curr == null)
+            return;
+        t = curr.next;
+        for (count = 1; count <= N && t != null; count++)
+        {
+            Node temp = t;
+            t = t.next;
+        }
+         
+   
+        curr.next = t;
+        curr = t;
+    }
+}
+ 
+public static void main(String args[])
+{
+   
+    1.2.3.4.5.6.7.8.9.10 */
+    Node head = null;
+    int M=2, N=3;
+    head=push(head, 10);
+    head=push(head, 9);
+    head=push(head, 8);
+    head=push(head, 7);
+    head=push(head, 6);
+    head=push(head, 5);
+    head=push(head, 4);
+    head=push(head, 3);
+    head=push(head, 2);
+    head=push(head, 1);
+ 
+    System.out.printf("M = %d, N = %d \nGiven" +
+                        "Linked list is :\n", M, N);
+    printList(head);
+ 
+    skipMdeleteN(head, M, N);
+ 
+    System.out.printf("\nLinked list after deletion is :\n");
+    printList(head);
+}
+}
+_______________________________________________________________
+
+April 28 Assignment
+1   "1. Create a myStack Class which has the following methods:
+     1. Push(x) : inserts the data into the stack 
+     2. Pop(): Removes the top element.
+     3. Peek() : Displays the top element.
+package Stack.java;
+
+public class newStack {
+
+	final int size=5;
+	int[]s=new int[size];
+	int top=-1;
+	
+	
+	int push (int data) {
+		if(top>=size-1) {
+			System.out.println("stack is overflow");
+			return -1;
+		}
+		else {
+			top++;
+			s[top]=data;
+			return s[top];
+		}
+		}
+	
+	
+	int pop() {
+		if(top<=-1) {
+			System.out.println("stack is UNDERFLOW");
+			return -1;
+			
+		}else {
+			
+			int temp=s[top];
+			top--;
+			return temp;
+			
+		}
+		
+		
+		
+	}
+	int peek() {
+		if(top==-1) {
+			System.out.println("stack is empty");
+			return -1;
+		}
+		else {
+		return	s[top];
+		}
+		}
+	
+	boolean isEmpty() {
+		
+		
+		return top<=-1?true:false;
+		
+	}
+	
+	void display() {
+
+		if (top == -1) {
+			System.out.println("Stack is empty");
+			return;
+		}
+		else {
+			for (int i = 0; i <= top; i++) {
+				System.out.println(s[i]);
+			}
+		}
+______________________________________________________________
+2 Remove duplicates from a sorted array using stack
+
+Ex - {0,0,1,1,1,1,2,2,4,5}
+Output - {0,1,2,4,5};"
+package Stack.java;
+
+import java.util.Stack;
+
+public class deleteDuplicateElement {
+
+
+	
+	public static void main(String[] args) {
+		
+		int []a= {10,10,20,56};
+		int size=a.length;
+	findduplicate(a,size);
+	System.out.println(a);
+		
+	}
+	private static void findduplicate(int[] a, int size) {
+		Stack<Integer> st = new Stack();
+		
+		for(int i=0;i<=size;i++) {
+			if(a[i]==a[i+1]) {
+				st.pop();
+				
+			}
+			
+			
+		}
+­­­­­­­­­­­­­­­­­­­­­­­-_______________________________________________
+
+
+April 29 Assignment 
+1 https://www.techiedelight.com/evaluate-given-postfix-expression/
+import java.util.Stack;
+ 
+public class Main
+{
+   
+    public static int evalPostfix(String exp)
+    {
+        
+        if (exp == null || exp.length() == 0) {
+            System.exit(-1);
+        }
+ 
+       
+        Stack<Integer> stack = new Stack<>();
+ 
+       
+        for (char c: exp.toCharArray())
+        {
+           
+            if (Character.isDigit(c)) {
+                stack.push(c - '0');
+            }
+        
+            else {
+               
+                int x = stack.pop();
+                int y = stack.pop();
+ 
+              
+                if (c == '+') {
+                    stack.push(y + x);
+                }
+                else if (c == '-') {
+                    stack.push(y - x);
+                }
+                else if (c == '*') {
+                    stack.push(y * x);
+                }
+                else if (c == '/') {
+                    stack.push(y / x);
+                }
+            }
+        }
+ 
+       
+        return stack.pop();
+    }
+ 
+    public static void main(String[] args)
+    {
+        String exp = "138*+";
+        System.out.println(evalPostfix(exp));
+    }
+}
+___________________________________________________________________________
+2 https://leetcode.com/problems/basic-calculator-ii/"""
+class Solution {
+    public int calculate(String s) {
+        Stack<Integer> stack=new Stack<>();
+        int len=s.length();
+        int num=0;
+        int sign=1;
+        char dm=' ';
+        for(int i=0;i<len;i++){
+            char c=s.charAt(i);
+            if(Character.isDigit(c)){
+                int temp=0;
+                while(i<len && Character.isDigit(s.charAt(i))){
+                    temp=temp*10+s.charAt(i)-'0';
+                    i++;
+                }
+                i--;
+                if(dm=='*')num=num*temp;
+                else if(dm=='/')num=num/temp;
+                else num=temp;
+                dm=' ';
+            }
+            else if(c=='*') dm='*';
+            else if(c=='/')dm='/';
+            else if(c=='+'){stack.push(sign*num);sign=1;}
+            else if(c=='-'){stack.push(sign*num);sign=-1;}
+        }
+        num*=sign;
+        while(!stack.isEmpty()){
+            num+=stack.pop();
+        }
+        return num;
+    }
+}
+__________________________________________________________________________
+
+April 30 Assignments 
+
+"Implement a queue data structure using the following data structure:  
+//1. Arrays
+//2. LinkedList """
+class Queue {
+	private static int front, rear, capacity;
+	private static int queue[];
+
+	Queue(int c) {
+		front = rear = 0;
+		capacity = c;
+		queue = new int[capacity];
+	}
+
+	static void queueEnqueue(int data) {
+		if (capacity == rear) {
+			System.out.printf("\nQueue is full\n");
+			return;
+		}
+
+		else {
+			queue[rear] = data;
+			rear++;
+		}
+		return;
+	}
+
+	static void queueDequeue() {
+		if (front == rear) {
+			System.out.printf("\nQueue is empty\n");
+			return;
+		}
+
+		else {
+			for (int i = 0; i < rear - 1; i++) {
+				queue[i] = queue[i + 1];
+			}
+
+			if (rear < capacity)
+				queue[rear] = 0;
+
+			rear--;
+		}
+		return;
+	}
+
+	static void queueDisplay() {
+		int i;
+		if (front == rear) {
+			System.out.printf("\nQueue is Empty\n");
+			return;
+		}
+
+		for (i = front; i < rear; i++) {
+			System.out.printf(" %d <-- ", queue[i]);
+		}
+		return;
+	}
+
+	static void queueFront() {
+		if (front == rear) {
+			System.out.printf("\nQueue is Empty\n");
+			return;
+		}
+		System.out.printf("\nFront Element is: %d", queue[front]);
+		return;
+	}
+}
+class QNode {
+  int key;
+  QNode next;
+
+  public QNode(int key)
+  {
+      this.key = key;
+      this.next = null;
+  }
+}
+class Queue1 {
+  QNode front, rear;
+
+  public Queue1()
+  {
+      this.front = this.rear = null;
+  }
+
+  void enqueue(int key)
+  {
+
+      QNode temp = new QNode(key);
+
+      if (this.rear == null) {
+          this.front = this.rear = temp;
+          return;
+      }
+
+      this.rear.next = temp;
+      this.rear = temp;
+  }
+
+  void dequeue()
+  {
+      if (this.front == null)
+          return;
+
+      QNode temp = this.front;
+      this.front = this.front.next;
+
+      if (this.front == null)
+          this.rear = null;
+  }
+}
+public class Apr30 {
+	public static void main(String[] args) {
+		//Arrays
+		Queue q = new Queue(4);
+
+		q.queueDisplay();
+
+		q.queueEnqueue(20);
+		q.queueEnqueue(30);
+		q.queueEnqueue(40);
+		q.queueEnqueue(50);
+		q.queueDisplay();
+
+		q.queueEnqueue(60);
+
+		q.queueDisplay();
+
+		q.queueDequeue();
+		q.queueDequeue();
+		System.out.printf("\nAfter two node deletion\n");
+		q.queueDisplay();
+
+		q.queueFront();
+
+		//LinkedList
+		Queue1 q1 = new Queue1();
+      q1.enqueue(10);
+      q1.enqueue(20);
+      q1.dequeue();
+      q1.dequeue();
+      q1.enqueue(30);
+      q1.enqueue(40);
+      q1.enqueue(50);
+      q1.dequeue();
+      System.out.println("\nQueue Front : " + q1.front.key);
+      System.out.println("Queue Rear : " + q1.rear.key);
+	}
+} 
+
+
+  
+
+
+
